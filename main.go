@@ -27,19 +27,25 @@ func executeTemplate(w http.ResponseWriter, filepath string) {
 }
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
-	tplPath := filepath.Join("templates", "home.gohtml")
-	executeTemplate(w, tplPath)
+	executeTemplate(w, filepath.Join("templates", "home.gohtml"))
 }
 
 func contactHandler(w http.ResponseWriter, r *http.Request) {
-	tplPath := filepath.Join("templates", "contact.gohtml")
-	executeTemplate(w, tplPath)
+	executeTemplate(w, filepath.Join("templates", "contact.gohtml"))
+}
+
+func faqHandler(w http.ResponseWriter, r *http.Request) {
+	executeTemplate(w, filepath.Join("templates", "faq.gohtml"))
 }
 
 func main() {
 	r := chi.NewRouter()
 	r.Get("/", homeHandler)
 	r.Get("/contact", contactHandler)
+	r.Get("/faq", faqHandler)
+	r.NotFound(func(w http.ResponseWriter, r *http.Request) {
+		http.Error(w, "404 page not found", http.StatusNotFound)
+	})
 	fmt.Println("Listening on port :3000...")
 	http.ListenAndServe(":3000", r)
 }
