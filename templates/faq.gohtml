@@ -1,28 +1,13 @@
 <h1>FAQ Page</h1>
 
 <ul>
-    <li>
-        <b>
-            Lorem ipsum dolor sit amet?
-        </b>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat, minima.
-    </li>
-    <li>
-        <b>
-            Lorem ipsum dolor sit amet?
-        </b>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat, minima.
-    </li>
-    <li>
-        <b>
-            Lorem ipsum dolor sit amet?
-        </b>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat, minima.
-    </li>
-    <li>
-        <b>
-            Lorem ipsum dolor sit amet?
-        </b>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat, minima.
-    </li>
+    {{range .}}
+        {{template "qa" .}}
+    {{end}}
 </ul>
+
+<pre>{{.}}</pre>
+
+{{define "qa"}}
+    <li><b>{{.Question}}</b> {{.Answer}}</li>
+{{end}}
