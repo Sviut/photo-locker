@@ -1,0 +1,11 @@
+### Create new user
+POST localhost:3000/users
+Content-Type: application/x-www-form-urlencoded
+
+
+email = "test@example.com" &
+password = "4324423424"
+
+<> 2025-02-06T095829.200.txt
+<> 2025-02-06T095828.200.txt
+<> 2025-02-06T095746.200.txt
