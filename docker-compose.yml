@@ -1,0 +1,12 @@
+version: '3.9'
+#docker compose exec -it db /usr/bin/psql -U user -d photo_locker
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: photo_locker
+    ports:
+      - "5432:5432"
