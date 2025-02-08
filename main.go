@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
+	_ "github.com/jackc/pgx/v4"
 	"github.com/sviut/photo-locker/controllers"
 	"github.com/sviut/photo-locker/templates"
 	"github.com/sviut/photo-locker/views"
@@ -40,5 +41,5 @@ func main() {
 		http.Error(w, "404 page not found", http.StatusNotFound)
 	})
 	fmt.Println("Listening on port :3000...")
-	http.ListenAndServe(":3000", r)
+	_ = http.ListenAndServe(":3000", r)
 }
