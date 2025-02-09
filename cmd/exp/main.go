@@ -1,8 +1,8 @@
 package main
 
 import (
-	"html/template"
-	"os"
+	"fmt"
+	"github.com/sviut/photo-locker/models"
 )
 
 type User struct {
@@ -16,21 +16,23 @@ type Meta struct {
 }
 
 func main() {
-	t, err := template.ParseFiles("hello.gohtml")
+	cfg := models.DefaultPostgresConfig()
+	db, err := models.Open(cfg)
 	if err != nil {
 		panic(err)
 	}
+	defer db.Close()
 
-	user := User{
-		Name: "John Doe",
-		Age:  42,
-		Meta: Meta{
-			Visits: 5,
-		},
-	}
-
-	err = t.Execute(os.Stdout, user)
+	err = db.Ping()
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println("Successfully connected to database")
+
+	us := models.UserService{DB: db}
+	user, err := us.Create("bob@test.com", "32456")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(user)
 }
