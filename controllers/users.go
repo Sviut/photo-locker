@@ -73,3 +73,12 @@ func (u Users) Create(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, "User created: %+v", user)
 }
+
+func (u Users) CurrentUser(w http.ResponseWriter, r *http.Request) {
+	email, err := r.Cookie("email")
+	if err != nil {
+		fmt.Fprint(w, "The email cookie is missing")
+		return
+	}
+	fmt.Fprintf(w, "Email cookie: %s\n", email.Value)
+}
