@@ -53,10 +53,11 @@ func main() {
 	r.Get("/signup", usersC.New)
 	r.Get("/signin", usersC.SignIn)
 	r.Post("/users", usersC.Create)
+	r.Post("/signin", usersC.ProcessSignIn)
 
 	r.NotFound(func(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "404 page not found", http.StatusNotFound)
 	})
-	fmt.Println("Listening on port :3000...")
-	_ = http.ListenAndServe(":3000", r)
+	fmt.Println("Listening on port :3333...")
+	_ = http.ListenAndServe(":3333", r)
 }
