@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/gorilla/csrf"
 	"github.com/sviut/photo-locker/models"
 	"net/http"
 
@@ -59,6 +60,14 @@ func main() {
 	r.NotFound(func(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "404 page not found", http.StatusNotFound)
 	})
+
+	csrfKey := "12345678901234567890123456789012"
+	csrfMw := csrf.Protect(
+		[]byte(csrfKey),
+		// TODO: fix before deploy
+		csrf.Secure(false),
+	)
+
 	fmt.Println("Listening on port :3333...")
-	_ = http.ListenAndServe(":3333", r)
+	_ = http.ListenAndServe(":3333", csrfMw(r))
 }
