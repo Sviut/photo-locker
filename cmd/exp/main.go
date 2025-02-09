@@ -1,6 +1,8 @@
 package main
 
 import (
+	"crypto/rand"
+	"encoding/base64"
 	"fmt"
 	"github.com/sviut/photo-locker/models"
 )
@@ -13,6 +15,12 @@ type User struct {
 
 type Meta struct {
 	Visits int
+}
+
+func generateCSRFKey() string {
+	key := make([]byte, 32)
+	rand.Read(key)
+	return base64.StdEncoding.EncodeToString(key)
 }
 
 func main() {

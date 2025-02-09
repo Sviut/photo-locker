@@ -61,7 +61,7 @@ func main() {
 		http.Error(w, "404 page not found", http.StatusNotFound)
 	})
 
-	csrfKey := "12345678901234567890123456789012"
+	csrfKey := "UVbMZYGb26WI9OD3n2myJwstbR+Dsk1xusq5qB96Uk4="
 	csrfMw := csrf.Protect(
 		[]byte(csrfKey),
 		// TODO: fix before deploy
