@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"fmt"
+	"github.com/sviut/photo-locker/models"
 	"net/http"
 )
 
@@ -9,6 +10,7 @@ type Users struct {
 	Templates struct {
 		New Template
 	}
+	UserService *models.UserService
 }
 
 func (u Users) New(w http.ResponseWriter, r *http.Request) {
@@ -22,12 +24,14 @@ func (u Users) New(w http.ResponseWriter, r *http.Request) {
 }
 
 func (u Users) Create(w http.ResponseWriter, r *http.Request) {
-	err := r.ParseForm()
+	email := r.FormValue("email")
+	password := r.FormValue("password")
+	user, err := u.UserService.Create(email, password)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		fmt.Println(err)
+		http.Error(w, "Something went wrong.", http.StatusInternalServerError)
 		return
 	}
 
-	fmt.Fprint(w, "Email", r.FormValue("email"))
-	fmt.Fprint(w, "Password", r.FormValue("password"))
+	fmt.Fprintf(w, "User created: %+v", user)
 }
