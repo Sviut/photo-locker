@@ -6,6 +6,10 @@ import (
 	"github.com/sviut/photo-locker/rand"
 )
 
+const (
+	MinBytesPerToken = 32
+)
+
 type Session struct {
 	ID     int
 	UserId int
@@ -15,11 +19,17 @@ type Session struct {
 }
 
 type SessionService struct {
-	DB *sql.DB
+	DB            *sql.DB
+	BytesPerToken int
 }
 
 func (ss *SessionService) Create(userId int) (*Session, error) {
-	token, err := rand.SessionToken()
+	bytesPerToken := ss.BytesPerToken
+	if bytesPerToken < MinBytesPerToken {
+		bytesPerToken = MinBytesPerToken
+	}
+
+	token, err := rand.String(bytesPerToken)
 	if err != nil {
 		return nil, fmt.Errorf("could not generate session token: %v", err)
 	}
