@@ -97,5 +97,5 @@ func (u Users) CurrentUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Fprintf(w, "Email cookie: %s\n", user.Email)
+	fmt.Fprintf(w, "Email cookie: %s\n", user)
 }
