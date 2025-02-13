@@ -1,6 +1,10 @@
 package models
 
-import "database/sql"
+import (
+	"database/sql"
+	"fmt"
+	"github.com/sviut/photo-locker/rand"
+)
 
 type Session struct {
 	ID     int
@@ -15,7 +19,15 @@ type SessionService struct {
 }
 
 func (ss *SessionService) Create(userId int) (*Session, error) {
-	return nil, nil
+	token, err := rand.SessionToken()
+	if err != nil {
+		return nil, fmt.Errorf("could not generate session token: %v", err)
+	}
+	session := Session{
+		UserId: userId,
+		Token:  token,
+	}
+	return &session, nil
 }
 
 func (ss *SessionService) User(token string) (*User, error) {
